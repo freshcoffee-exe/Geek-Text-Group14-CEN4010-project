@@ -74,6 +74,7 @@ public class BookRatingController {
 		
 
 	}
+	
 	/*
 	// get book ratings api
 	/*
