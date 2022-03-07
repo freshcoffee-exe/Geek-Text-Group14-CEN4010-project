@@ -10,6 +10,6 @@ import com.example.model.BookRating;
 
 @Repository
 public interface BookRatingRepository extends JpaRepository<BookRating, Integer> {
-
+	//
 	List<BookRating> findByIsbn(Long isbn);
 }
