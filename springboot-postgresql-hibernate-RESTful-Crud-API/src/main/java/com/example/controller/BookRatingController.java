@@ -32,7 +32,7 @@ import com.example.repository.BookRatingRepository;
 public class BookRatingController {
 
 	
-	
+	//hello
 	@Autowired
 	private BookRatingRepository bookRatingRepository;
 	
