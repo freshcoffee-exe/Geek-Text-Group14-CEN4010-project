@@ -10,6 +10,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.exception.ResourceNotFoundException;
 import com.example.model.BookRating;
+import com.example.model.BookDetails;
 import com.example.repository.BookRatingRepository;
 
 @RestController
@@ -32,13 +35,16 @@ import com.example.repository.BookRatingRepository;
 public class BookRatingController {
 
 	
-	//
+	
 	@Autowired
 	private BookRatingRepository bookRatingRepository;
 	
+	@Autowired
+	JdbcTemplate jdbcTemplate;
 	
 	
-	//@GetMapping("/bookrating")
+	
+	@GetMapping("/bookrating")
 	@RequestMapping(path = "/bookrating", method = RequestMethod.GET)
 	public List<BookRating> getALLBookRating(){
 		return this.bookRatingRepository.findAll();
@@ -53,7 +59,22 @@ public class BookRatingController {
 	public ResponseEntity<List<BookRating>> getALLByID(@PathVariable(value = "isbn")Long isbn){
 		return new ResponseEntity<List<BookRating>>(bookRatingRepository.findByIsbn(isbn), HttpStatus.OK);
 	}
-	
+	/*
+	@GetMapping("/test")
+	public List<BookRating> getAll(){
+		return jdbcTemplate.query("SELECT isbn,book_name, AVG(rating)\r\n"
+				+ "FROM\r\n"
+				+ "(SELECT book_details.isbn, book_name, rating FROM\r\n"
+				+ "book_details\r\n"
+				+ "FULL JOIN book_rating\r\n"
+				+ "ON book_details.isbn = book_rating.isbn) AS tmp\r\n"
+				+ "WHERE rating IS NOT NULL\r\n"
+				+ "GROUP BY isbn, book_name\r\n"
+				+ "HAVING AVG(rating) > 2", new BeanPropertyRowMapper<BookRating>(BookRating.class));
+		
+
+	}
+	/*
 	// get book ratings api
 	/*
 	@GetMapping("bookrating")
