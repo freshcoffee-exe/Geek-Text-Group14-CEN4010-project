@@ -71,7 +71,6 @@ public class BookRatingController {
 				+ "WHERE rating IS NOT NULL\r\n"
 				+ "GROUP BY isbn, book_name\r\n"
 				+ "HAVING AVG(rating) > 2", new BeanPropertyRowMapper<BookRating>(BookRating.class));
-		
 
 	}
 	
