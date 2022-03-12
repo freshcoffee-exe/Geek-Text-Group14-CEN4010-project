@@ -81,7 +81,7 @@ public class BookRatingController {
 	}
 	
 	
-	//pulls up the average rating by isbn
+	//pulls up the average rating by isbn 
 	@GetMapping("/findavgrating/{isbn}")
 	public List<BookAvg> getAllAverageByID(@PathVariable("isbn") Long isbn){
 		return jdbcTemplate.query("SELECT isbn,book_name, AVG(rating) AS avg_rating\r\n"
