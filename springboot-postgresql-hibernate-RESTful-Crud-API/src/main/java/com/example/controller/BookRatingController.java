@@ -13,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.validation.annotation.Validated;
+
+import org.springframework.web.bind.annotation.*;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +34,7 @@ import com.example.model.BookAvg;
 import com.example.model.BookDetails;
 import com.example.repository.BookRatingRepository;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/")
 public class BookRatingController {
@@ -50,8 +54,18 @@ public class BookRatingController {
 	public List<BookRating> getALLBookRating(){
 		return this.bookRatingRepository.findAll();
 	}
+
+	//Query the ratings by the input value, also any higher values
+	@GetMapping("/querybyrating/{rating}")
+	public List<BookRating> getRatingsAndHigher(@PathVariable int rating) {
+		return this.bookRatingRepository.findRatingOrHigher(rating);
+	}
+	/*
+	@RequestMapping(path = "/helloAPI", method = RequestMethod.GET)
+=======
 	
 	@RequestMapping(path = "/helloworld", method = RequestMethod.GET)
+>>>>>>> bfd2bf1b6ad201dac32c211ac1d84a937452170a
 	public String getGreeting() {
 		return "Hello World, this is Eren";
 	}

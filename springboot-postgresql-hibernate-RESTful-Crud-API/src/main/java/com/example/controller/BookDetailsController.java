@@ -5,6 +5,7 @@ import com.example.model.BookAvg;
 import com.example.model.BookDetails;
 import com.example.model.BookRating;
 import com.example.repository.BookDetailsRepository;
+import com.example.repository.BookRatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/")
 public class BookDetailsController {
@@ -21,35 +23,45 @@ public class BookDetailsController {
     @Autowired
     private BookDetailsRepository bookDetailsRepository;
 
-	
+
+    @Autowired
+    private BookRatingRepository bookRatingRepository;
+
+    @GetMapping("/{isbn}")
+    public List<BookDetails> getGenreBookDetails(@PathVariable long isbn) {
+
+        return this.bookDetailsRepository.findIsbn(isbn);
+    }
+
+
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
+
     @RequestMapping (path = "/bookdetails", method = RequestMethod.GET)
     public List<BookDetails> getALLBookDetails() {
         return this.bookDetailsRepository.findAll();
     }
 
     //Genre is case sensitive, the first letter must be uppercase!
-    @GetMapping("/bookdetails/{genre}")
+    @GetMapping("/genre/{genre}")
     public List<BookDetails> getGenreBookDetails(@PathVariable String genre) {
 
-        List<BookDetails> booksOfThatGenre = new ArrayList<>();
+        return this.bookDetailsRepository.findGenre(genre);
+    }
 
-        List<BookDetails> allBooks = this.bookDetailsRepository.findAll();
+    @GetMapping("/averagerating")
+    public List<BookDetails> getAverageRatingBooks() {
 
-        Iterator<BookDetails> iterator = allBooks.iterator();
+        return this.bookDetailsRepository.findAverageRatingBooks();
+    }
 
-        while (iterator.hasNext()) {
+    //Top 10
+    @RequestMapping (path = "/topsellers", method = RequestMethod.GET)
+    public List<BookDetails> getTopSellers() {
+        List<BookDetails> allBooks = this.bookDetailsRepository.findTop10();
 
-            BookDetails currentBook = iterator.next();
-
-            if(currentBook.getGenre().equals(genre)) {
-                booksOfThatGenre.add(currentBook);
-            }
-        }
-
-        return booksOfThatGenre;
+        return allBooks;
     }
     
 	@GetMapping("/test1")
@@ -65,8 +77,4 @@ public class BookDetailsController {
 				+ "HAVING AVG(rating) > 1", new BeanPropertyRowMapper<BookAvg>(BookAvg.class));
 	}
 
-//    @RequestMapping (path = "/genre", method = RequestMethod.GET)
-//    public List<BookDetails> getALLBookDetails() {
-//        return this.bookDetailsRepository.findAll();
-//    }
 }
