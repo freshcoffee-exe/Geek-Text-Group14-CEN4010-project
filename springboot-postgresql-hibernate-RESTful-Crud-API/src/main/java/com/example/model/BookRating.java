@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Table(name = "book_rating")
 public class BookRating {
 	
-
+	private int id;
 	private long isbn;
 	private String email;
 	private Integer rating;
@@ -25,7 +25,8 @@ public class BookRating {
 	public BookRating() {
 		
 	}
-	public BookRating(String email, Integer rating, Timestamp datestamp, String rating_comment) {
+	public BookRating(Long isbn, String email, Integer rating, Timestamp datestamp, String rating_comment) {
+		this.isbn = isbn;
 		this.email = email;
 		this.rating = rating;
 		this.datestamp = datestamp;
@@ -35,10 +36,18 @@ public class BookRating {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public long getIsbn() {
+	public Integer getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	@Column(name = "isbn")
+	public Long getIsbn() {
 		return isbn;
 	}
-	public void setIsbn(long isbn) {
+	public void setIsbn(Long isbn) {
 		this.isbn = isbn;
 	}
 	
@@ -76,7 +85,7 @@ public class BookRating {
 
 	@Override
 	public String toString() {
-		return "BookRating [isbn=" + isbn + ", email=" + email + ", rating=" + rating + ", datestamp=" + datestamp
+		return "BookRating [id=" + id + ", isbn=" + isbn + ", email=" + email + ", rating=" + rating + ", datestamp=" + datestamp
 				+ ", rating_comment=" + rating_comment + "]";
 	}
 }
