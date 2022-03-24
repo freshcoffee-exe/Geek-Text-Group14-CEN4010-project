@@ -30,6 +30,12 @@ public class BookDetailsController {
         return this.bookDetailsRepository.findAll();
     }
 
+    @GetMapping("/{isbn}")
+    public List<BookDetails> getGenreBookDetails(@PathVariable long isbn){
+
+            return this.bookDetailsRepository.findIsbn(isbn);
+        }
+
     //Genre is case sensitive, the first letter must be uppercase!
     @GetMapping("/bookdetails/{genre}")
     public List<BookDetails> getGenreBookDetails(@PathVariable String genre) {
@@ -69,4 +75,11 @@ public class BookDetailsController {
 //    public List<BookDetails> getALLBookDetails() {
 //        return this.bookDetailsRepository.findAll();
 //    }
+
+    @PostMapping("/createbook")
+    public void createBook(@RequestBody BookDetails book) {
+
+        this.bookDetailsRepository.save(book);
+        System.out.println(book);
+    }
 }
