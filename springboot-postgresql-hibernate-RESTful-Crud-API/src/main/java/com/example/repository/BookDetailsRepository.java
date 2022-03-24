@@ -27,5 +27,4 @@ public interface BookDetailsRepository extends JpaRepository<BookDetails, Long> 
     @Query(value = "SELECT * FROM public.book_rating ", nativeQuery = true)
     List<BookDetails> findAverageRatingBooks();
 
-
 }

@@ -31,8 +31,20 @@ public class BookDetails {
         this.copies_sold = copies_sold;
     }
 
+    public BookDetails(Long isbn, String book_name, String description, double price, String author, String genre, String publisher, int year_published, int copies_sold) {
+        this.isbn = isbn;
+        this.book_name = book_name;
+        this.description = description;
+        this.price = price;
+        this.author = author;
+        this.genre = genre;
+        this.publisher = publisher;
+        this.year_published = year_published;
+        this.copies_sold = copies_sold;
+    }
+
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column(name = "isbn")
     public long getIsbn() {
         return isbn;
     }
@@ -108,7 +120,7 @@ public class BookDetails {
 
     @Override
     public String toString() {
-        return "BookRating [isbn=" + isbn + ", book_name=" + book_name + "description, =" + description + "price, =" +
+        return "BookDetails [isbn=" + isbn + ", book_name=" + book_name + "description, =" + description + "price, =" +
                 price + "author, =" + author + "genre, =" + genre + "publisher, =" + publisher + "year_published, =" +
                 year_published + "copies_sold, =" + copies_sold + "]";
     }
