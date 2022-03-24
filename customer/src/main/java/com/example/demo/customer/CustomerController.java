@@ -19,11 +19,10 @@ public class CustomerController {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-//    @PostMapping("/newcustomer")
-//    public void createCustomer(@RequestBody Customer customer){
-//        this.customerRepository.save(customer);
-//        System.out.println(customer);
-//    }
+    @PostMapping("/newcustomer")
+    public Customer createCustomer(@RequestBody Customer customer){
+        return this.customerRepository.save(customer);
+    }
 
 
     @GetMapping("/customers")
@@ -38,11 +37,9 @@ public class CustomerController {
     }
 
 
-    @PutMapping
-    @RequestMapping(path = "/customers/{email}", method = RequestMethod.PUT)
-    public void updateCustomer(@RequestBody Customer customer, @PathVariable String email){
-        this.customerRepository.save(customer);
-        System.out.println("UPDATES TO CUSTOMER PROFILE SAVED.");
+    @PatchMapping(value = "/customers/{email}")
+    public Customer updateCustomer(@RequestBody Customer customer, @PathVariable String email){
+        return this.customerRepository.save(customer);
     }
 
 
