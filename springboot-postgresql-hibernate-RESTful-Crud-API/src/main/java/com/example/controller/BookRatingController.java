@@ -60,12 +60,8 @@ public class BookRatingController {
 	public List<BookRating> getRatingsAndHigher(@PathVariable int rating) {
 		return this.bookRatingRepository.findRatingOrHigher(rating);
 	}
-	/*
-	@RequestMapping(path = "/helloAPI", method = RequestMethod.GET)
-=======
-	
+		
 	@RequestMapping(path = "/helloworld", method = RequestMethod.GET)
->>>>>>> bfd2bf1b6ad201dac32c211ac1d84a937452170a
 	public String getGreeting() {
 		return "Hello World, this is Eren";
 	}
