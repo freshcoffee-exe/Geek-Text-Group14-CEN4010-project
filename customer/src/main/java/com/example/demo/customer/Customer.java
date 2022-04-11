@@ -1,6 +1,8 @@
 package com.example.demo.customer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "customer")
@@ -10,6 +12,10 @@ public class Customer {
     private String first_name;
     private String last_name;
     private String address;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "customer")
+    private List<CreditCard> creditCard;
 
     public Customer() {
     }
@@ -22,9 +28,13 @@ public class Customer {
         this.address = address;
     }
 
+//    public List<CreditCard> getCreditCards() {
+//        return creditCard;
+//    }
+
     @Id
     //@GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "email")
     public String getEmail() {
         return email;
     }

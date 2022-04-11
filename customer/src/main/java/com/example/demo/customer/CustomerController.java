@@ -1,15 +1,17 @@
 package com.example.demo.customer;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping(path = "api/")
+@RequestMapping(path = "/api")
 public class CustomerController {
 
     @Autowired
@@ -24,8 +26,7 @@ public class CustomerController {
         return this.customerRepository.save(customer);
     }
 
-
-    @GetMapping("/customers")
+    @GetMapping("/allcustomers")
     //@RequestMapping(value = "/customers", method = RequestMethod.GET)
     public List<Customer> getAllCustomers(){
         return this.customerRepository.findAll();
@@ -36,11 +37,14 @@ public class CustomerController {
         return customerRepository.findByEmail(email);
     }
 
-
-    @PatchMapping(value = "/customers/{email}")
-    public Customer updateCustomer(@RequestBody Customer customer, @PathVariable String email){
+    @PatchMapping(value = "/updatecustomer/{email}")
+    public Customer updateCustomer(@PathVariable String email, @RequestBody Map<Object, Object> objectMap){
+        Customer customer = customerRepository.findById(email).get();
+        objectMap.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(Customer.class, (String) key);
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, customer, value);
+        });
         return this.customerRepository.save(customer);
     }
-
-
 }
