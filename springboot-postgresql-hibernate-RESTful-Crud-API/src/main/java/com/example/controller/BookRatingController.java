@@ -62,7 +62,7 @@ public class BookRatingController {
 	public ResponseEntity<List<BookRating>> getALLByID(@PathVariable(value = "isbn")Long isbn){
 		return new ResponseEntity<List<BookRating>>(bookRatingRepository.findByIsbn(isbn), HttpStatus.OK);
 	}
-	
+
 	// save rating
 	@PostMapping("/bookrating")
 	public BookRating createBookRating(@RequestBody BookRating bookrating) {
@@ -79,6 +79,7 @@ public class BookRatingController {
 	@GetMapping("/findrating/{isbn}")
 	public List<BookRating> getAllByIsbn(@PathVariable("isbn") Long isbn){
 		return jdbcTemplate.query("SELECT * FROM book_rating WHERE isbn =" + isbn + " ORDER BY rating desc", new BeanPropertyRowMapper<BookRating>(BookRating.class));
+
 	}
 	
 	//pulls up the average rating by isbn 
