@@ -34,20 +34,16 @@ import com.example.model.BookAvg;
 import com.example.model.BookDetails;
 import com.example.repository.BookRatingRepository;
 
-@CrossOrigin(origins = "http://localhost:3000")
+
 @RestController
 @RequestMapping("/api/")
 public class BookRatingController {
 
-	
-	
 	@Autowired
 	private BookRatingRepository bookRatingRepository;
 	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
-	
-	
 	
 	@GetMapping("/bookrating")
 	@RequestMapping(path = "/bookrating", method = RequestMethod.GET)
@@ -59,11 +55,6 @@ public class BookRatingController {
 	@GetMapping("/querybyrating/{rating}")
 	public List<BookRating> getRatingsAndHigher(@PathVariable int rating) {
 		return this.bookRatingRepository.findRatingOrHigher(rating);
-	}
-		
-	@RequestMapping(path = "/helloworld", method = RequestMethod.GET)
-	public String getGreeting() {
-		return "Hello World, this is Eren";
 	}
 	
 	//get book ratings by isbn
@@ -78,7 +69,7 @@ public class BookRatingController {
 		return this.bookRatingRepository.save(bookrating);
 	}
 	
-	//finds alls the ratings sorted by highes rating first
+	//finds alls the ratings sorted by highest rating first
 	@GetMapping("/findrating")
 	public List<BookRating> getAll(){
 		return jdbcTemplate.query("SELECT * FROM book_rating ORDER BY rating desc", new BeanPropertyRowMapper<BookRating>(BookRating.class));
@@ -89,7 +80,6 @@ public class BookRatingController {
 	public List<BookRating> getAllByIsbn(@PathVariable("isbn") Long isbn){
 		return jdbcTemplate.query("SELECT * FROM book_rating WHERE isbn =" + isbn + " ORDER BY rating desc", new BeanPropertyRowMapper<BookRating>(BookRating.class));
 	}
-	
 	
 	//pulls up the average rating by isbn 
 	@GetMapping("/findavgrating/{isbn}")
@@ -102,67 +92,4 @@ public class BookRatingController {
 				+ "ON book_details.isbn = book_rating.isbn) AS tmp\r\n"
 				+ "WHERE rating IS NOT NULL AND ISBN = " + isbn + " GROUP BY isbn, book_name", new BeanPropertyRowMapper<BookAvg>(BookAvg.class));
 	}
-	
-	/*
-	@GetMapping("/test")
-	public List<BookRating> getAll(){
-		return jdbcTemplate.query("SELECT isbn,book_name, AVG(rating)\r\n"
-				+ "FROM\r\n"
-				+ "(SELECT book_details.isbn, book_name, rating FROM\r\n"
-				+ "book_details\r\n"
-				+ "FULL JOIN book_rating\r\n"
-				+ "ON book_details.isbn = book_rating.isbn) AS tmp\r\n"
-				+ "WHERE rating IS NOT NULL\r\n"
-				+ "GROUP BY isbn, book_name\r\n"
-				+ "HAVING AVG(rating) > 2", new BeanPropertyRowMapper<BookRating>(BookRating.class));
-
-	}
-	
-	/*
-	// get book ratings api
-	/*
-	@GetMapping("bookrating")
-	public List<BookRating> getALLBookRating(){
-		return this.bookRatingRepository.findAll();
-	}
-	
-	
-	*/
-
-	
-	
-	/*
-	 // get book ratings by isbn
-	@GetMapping("/bookrating/{isbn}")
-		public ResponseEntity<BookRating> getBookRatingByIsbn(@PathVariable(value = "isbn") Long isbn) throws ResourceNotFoundException{
-			BookRating bookrating = bookRatingRepository.findById(isbn)
-					.orElseThrow(() -> new ResourceNotFoundException("ISBN not found for :: " + isbn));
-			return ResponseEntity.ok().body(bookrating);
-	}
-	
-	// save rating
-	@PostMapping("bookrating")
-	public BookRating createBookRating(@RequestBody BookRating bookrating) {
-		return this.bookRatingRepository.save(bookrating);
-	}
-	
-	// update rating
-	@PutMapping("bookRating/{isbn}")
-	public ResponseEntity<BookRating> updateBookRatingByIsbn(@PathVariable(value = "isbn") Long isbn,
-			@Valid @RequestBody BookRating bookRatingDetails) throws ResourceNotFoundException{
-		
-		BookRating bookrating = bookRatingRepository.findById(isbn)
-				.orElseThrow(() -> new ResourceNotFoundException("ISBN not found for :: " + isbn));
-		bookrating.setEmail(bookRatingDetails.getEmail());
-		bookrating.setRating(bookRatingDetails.getRating());
-		bookrating.setDatestamp(bookRatingDetails.getDatestamp());
-		bookrating.setRating_comment(bookRatingDetails.getRating_comment());
-		
-		return ResponseEntity.ok(this.bookRatingRepository.save(bookrating));
-		
-		
-	}
-	// delete rating
-	
-	*/
 }
