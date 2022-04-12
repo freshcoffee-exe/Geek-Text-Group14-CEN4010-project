@@ -52,7 +52,7 @@ public class BookRatingController {
 	
 	@RequestMapping(path = "/helloworld", method = RequestMethod.GET)
 	public String getGreeting() {
-		return "Hello World, this is Eren";
+		return "Hello World, this is Richelle";
 	}
 	
 	@GetMapping("/bookrating/{isbn}")
