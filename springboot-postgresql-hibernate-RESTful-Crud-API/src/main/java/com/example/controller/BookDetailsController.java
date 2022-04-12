@@ -97,6 +97,12 @@ public class BookDetailsController {
         return booksByIndex;
     }
 
+    @GetMapping("/index/{index}")
+    public List<BookDetails> getXBooksFromX(@PathVariable int index) {
+        List<BookDetails> booksByIndex = this.bookDetailsRepository.findBooksByPosition(index, 20);
+
+        return booksByIndex;
+    }
 
     @PostMapping("/createbook") //creates book
     public void createBook(@RequestBody BookDetails book) {
