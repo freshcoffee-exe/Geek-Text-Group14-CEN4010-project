@@ -37,16 +37,12 @@ import com.example.repository.BookRatingRepository;
 @RestController
 @RequestMapping("/api/")
 public class BookRatingController {
-
-	
 	
 	@Autowired
 	private BookRatingRepository bookRatingRepository;
 	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
-	
-	
 	
 	@GetMapping("/bookrating")
 	@RequestMapping(path = "/bookrating", method = RequestMethod.GET)
@@ -61,10 +57,9 @@ public class BookRatingController {
 	}
 	/*
 	@RequestMapping(path = "/helloAPI", method = RequestMethod.GET)
-=======
 	
 	@RequestMapping(path = "/helloworld", method = RequestMethod.GET)
->>>>>>> bfd2bf1b6ad201dac32c211ac1d84a937452170a
+
 	public String getGreeting() {
 		return "Hello World, this is Eren";
 	}
@@ -73,7 +68,7 @@ public class BookRatingController {
 	public ResponseEntity<List<BookRating>> getALLByID(@PathVariable(value = "isbn")Long isbn){
 		return new ResponseEntity<List<BookRating>>(bookRatingRepository.findByIsbn(isbn), HttpStatus.OK);
 	}
-	/*
+
 	@GetMapping("/test")
 	public List<BookRating> getAll(){
 		return jdbcTemplate.query("SELECT isbn,book_name, AVG(rating)\r\n"
@@ -87,21 +82,14 @@ public class BookRatingController {
 				+ "HAVING AVG(rating) > 2", new BeanPropertyRowMapper<BookRating>(BookRating.class));
 
 	}
-	
-	/*
+
 	// get book ratings api
-	/*
+
 	@GetMapping("bookrating")
 	public List<BookRating> getALLBookRating(){
 		return this.bookRatingRepository.findAll();
 	}
-	
-	
-	*/
 
-	
-	
-	/*
 	 // get book ratings by isbn
 	@GetMapping("/bookrating/{isbn}")
 		public ResponseEntity<BookRating> getBookRatingByIsbn(@PathVariable(value = "isbn") Long isbn) throws ResourceNotFoundException{
@@ -109,7 +97,8 @@ public class BookRatingController {
 					.orElseThrow(() -> new ResourceNotFoundException("ISBN not found for :: " + isbn));
 			return ResponseEntity.ok().body(bookrating);
 	}
-	
+	*/
+	/*
 	// save rating
 	@PostMapping("bookrating")
 	public BookRating createBookRating(@RequestBody BookRating bookrating) {
@@ -129,8 +118,7 @@ public class BookRatingController {
 		bookrating.setRating_comment(bookRatingDetails.getRating_comment());
 		
 		return ResponseEntity.ok(this.bookRatingRepository.save(bookrating));
-		
-		
+
 	}
 	// delete rating
 	
