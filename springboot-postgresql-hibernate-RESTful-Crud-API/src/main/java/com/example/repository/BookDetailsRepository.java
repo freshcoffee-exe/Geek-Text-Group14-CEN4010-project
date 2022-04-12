@@ -28,4 +28,7 @@ public interface BookDetailsRepository extends JpaRepository<BookDetails, Long> 
     @Query(value = "SELECT * FROM ( SELECT ROW_NUMBER() OVER (ORDER BY isbn) row_num, isbn, book_name, description, price, author, genre, publisher, year_published, copies_sold FROM public.book_details ) x WHERE row_num > :index - 1 AND row_num <= :index - 1 + :amount", nativeQuery = true)
     List<BookDetails> findBooksByPosition(@Param("index") int index, @Param("amount") int amount);
 
+    @Query(value = "SELECT * FROM public.book_rating ", nativeQuery = true)
+    List<BookDetails> findAverageRatingBooks();
+
 }
