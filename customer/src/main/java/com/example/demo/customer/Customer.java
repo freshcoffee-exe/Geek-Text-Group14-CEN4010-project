@@ -28,12 +28,7 @@ public class Customer {
         this.address = address;
     }
 
-//    public List<CreditCard> getCreditCards() {
-//        return creditCard;
-//    }
-
     @Id
-    //@GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "email")
     public String getEmail() {
         return email;

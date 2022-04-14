@@ -1,7 +1,6 @@
 package com.example.demo.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +32,6 @@ public class CreditCardController {
         return creditCardRepository.save(creditCard);
     }
 
-    //FIXME
     @GetMapping("/{customer_email}/allCards")
     public List<CreditCard> getAllCustomersCards(@PathVariable String customer_email){
         return this.creditCardRepository.findByEmail(customer_email);
