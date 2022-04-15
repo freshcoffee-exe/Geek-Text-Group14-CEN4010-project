@@ -28,11 +28,11 @@ public class BookDetailsController {
     @Autowired
     private BookRatingRepository bookRatingRepository;
 
-    @GetMapping("/{isbn}")
-    public List<BookDetails> getGenreBookDetails(@PathVariable long isbn) {
-
-        return this.bookDetailsRepository.findIsbn(isbn);
-    }
+//    @GetMapping("/{isbn}")
+//    public List<BookDetails> getBookDetails(@PathVariable long isbn) {
+//
+//        return this.bookDetailsRepository.findIsbn(isbn);
+//    }
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
