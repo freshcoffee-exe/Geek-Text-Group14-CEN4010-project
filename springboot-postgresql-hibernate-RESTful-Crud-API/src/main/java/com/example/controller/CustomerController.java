@@ -1,5 +1,8 @@
-package com.example.demo.customer;
+package com.example.controller;
 
+import com.example.model.Customer;
+import com.example.repository.CustomerRepository;
+import com.example.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.ReflectionUtils;
